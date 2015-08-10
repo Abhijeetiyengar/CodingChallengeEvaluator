@@ -1,4 +1,4 @@
-package com.basic.CodeEvaluator;
+package com.basic.CodeEvaluator.common;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,21 +15,23 @@ import javax.tools.SimpleJavaFileObject;
 
 import org.apache.commons.io.FileUtils;
 
+import com.basic.CodeEvaluator.bean.ParameterBean;
+import com.basic.CodeEvaluator.rules.Enricher;
+
 public class StandaloneCodeCompilerAndExecutor {
 
+	// public static void main(String args[]) throws Exception {
+	// StandaloneCodeCompilerAndExecutor compilerAndexecutor = new
+	// StandaloneCodeCompilerAndExecutor();
+	// compilerAndexecutor.compileJavaObject(args[0]);
+	//
+	// }
 
-
-	public static void main(String args[]) throws Exception {
-		StandaloneCodeCompilerAndExecutor compilerAndexecutor = new StandaloneCodeCompilerAndExecutor();
-		compilerAndexecutor.compileJavaObject(args[0]);
-
-	}
-
-	public String compileJavaObject(String compileFilePath) throws Exception {
-		if (compileFilePath != null) {
+	public String compileJavaObject(File newJavaFileName,
+			ParameterBean paramBean) throws Exception {
+		if (newJavaFileName != null) {
 			try {
-				
-				File newJavaFileName = new File(compileFilePath);
+
 				String fileName = newJavaFileName.getName();
 				System.out.println(fileName);
 				JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -38,18 +40,18 @@ public class StandaloneCodeCompilerAndExecutor {
 				DiagnosticCollector<JavaFileObject> collector = new DiagnosticCollector<JavaFileObject>();
 				Iterable<? extends JavaFileObject> fileObjectArray = Arrays
 						.asList(fileObject);
-				 compiler.getTask(null,
+				compiler.getTask(null,
 						compiler.getStandardFileManager(collector, null, null),
 						collector, null, null, fileObjectArray).call();
-				String className=fileName.replace(".java", "");
-				File classFile = new File(className
-						+ ".class");
-				FileUtils
-						.copyFileToDirectory(classFile, new File("/tmp"), true);
+				printDiagnostic(collector);
+				String className = fileName.replace(".java", "");
+				File classFile = new File(className + ".class");
+				String locationToBeCopied = createTmpDirectoryStructure(
+						className, paramBean);
+				FileUtils.copyFileToDirectory(classFile, new File(
+						locationToBeCopied), true);
 
 				FileUtils.deleteQuietly(classFile);
-				
-				printDiagnostic(collector);
 
 				return className;
 			} catch (Exception e) {
@@ -59,6 +61,24 @@ public class StandaloneCodeCompilerAndExecutor {
 		} else {
 			throw new RuntimeException("No Java File Name found ");
 		}
+	}
+
+	private String createTmpDirectoryStructure(String className,
+			ParameterBean parameterBean) throws Exception {
+		String baseDir = "/tmp/codeEvaluation/"+DateUtil.getCurrentTimeinStringddMMyyyyHHmmss();
+		String packageName = parameterBean.getEvaluatedResultsBean()
+				.getPackageNameOfJavaClass();
+		if (packageName != null && packageName.length() > 0) {
+			String[] folderStructure = packageName.split("\\.");
+			for (String folder : folderStructure) {
+				baseDir = baseDir + "/" + folder;
+				FileUtils.forceMkdir(new File(baseDir));
+
+			}
+		}
+
+		return baseDir;
+
 	}
 
 	private void printDiagnostic(DiagnosticCollector<JavaFileObject> diagnostics) {

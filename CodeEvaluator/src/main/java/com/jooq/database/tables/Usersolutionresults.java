@@ -11,7 +11,7 @@ package com.jooq.database.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Usersolutionresults extends org.jooq.impl.TableImpl<com.jooq.database.tables.records.UsersolutionresultsRecord> {
 
-	private static final long serialVersionUID = -1076234548;
+	private static final long serialVersionUID = -674895339;
 
 	/**
 	 * The singleton instance of <code>UserSolutionResults</code>
@@ -45,6 +45,16 @@ public class Usersolutionresults extends org.jooq.impl.TableImpl<com.jooq.databa
 	 * The column <code>UserSolutionResults.timestamp</code>.
 	 */
 	public final org.jooq.TableField<com.jooq.database.tables.records.UsersolutionresultsRecord, java.lang.String> TIMESTAMP = createField("timestamp", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+	/**
+	 * The column <code>UserSolutionResults.eventId</code>.
+	 */
+	public final org.jooq.TableField<com.jooq.database.tables.records.UsersolutionresultsRecord, java.lang.Object> EVENTID = createField("eventId", org.jooq.impl.DefaultDataType.getDefaultDataType("Number"), this, "");
+
+	/**
+	 * The column <code>UserSolutionResults.problemName</code>.
+	 */
+	public final org.jooq.TableField<com.jooq.database.tables.records.UsersolutionresultsRecord, java.lang.String> PROBLEMNAME = createField("problemName", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * Create a <code>UserSolutionResults</code> table reference
