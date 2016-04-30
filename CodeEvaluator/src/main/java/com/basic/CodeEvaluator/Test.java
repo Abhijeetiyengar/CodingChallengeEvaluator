@@ -25,7 +25,7 @@ public class Test {
     PrintWriter out = new PrintWriter(writer);
     out.println("public class HelloWorld {");
     out.println("  public static void main(String args[]) {");
-    out.println("    System.out.println(\"This is in another java file\");");    
+    out.println("    System.out.println(\"This is in another java file1\");");
     out.println("  }");
     out.println("}");
     out.close();
