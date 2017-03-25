@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ParkingLotInitiatorTest.class)
 @ActiveProfiles("test")
-@TestPropertySource(locations="classpath:test_properties_number.properties")
+@TestPropertySource(locations="classpath:\\test_properties_correct_data.properties")
 public class HelperTestValidData {
 
     @Autowired
@@ -28,7 +28,7 @@ public class HelperTestValidData {
     public void  testPropertiesWithValidData()
     {
 
-        Assert.assertEquals(helper.getVechileTypeToInfoMap().size(),2);
+        Assert.assertEquals(helper.getVechileTypeToInfoMap().size(),3);
 
     }
 }

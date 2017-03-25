@@ -71,7 +71,9 @@ public class PropertiesHelper {
                 vehicleInfo -> {
                     if(vehicleInfo.getErrorList()!=null)
                         throw new RuntimeException(vehicleInfo.getErrorList().toString());
-                    vehicleInfo.setPricePerTimeUnit(vehicleInfo.getPrice()/price_in_multiple_of_hours);
+                    if(!vehicleInfo.verify())
+                        throw new RuntimeException("Invalid data provided for type "+vehicleInfo.getType());
+                    vehicleInfo.setPricePerTimeUnit((float) vehicleInfo.getPrice()/price_in_multiple_of_hours);
                     vehicleInfoBuilder.append(counter.addAndGet(1)).append(" for ").append(vehicleInfo.getType()).append("\n");
                 }
         );

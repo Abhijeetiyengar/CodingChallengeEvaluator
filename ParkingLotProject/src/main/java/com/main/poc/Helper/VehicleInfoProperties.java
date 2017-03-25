@@ -27,8 +27,8 @@ public class VehicleInfoProperties {
     public  static class VehicleInfo
     {
         private  String type;
-        private int price;
-        private int size;
+        private int price=-1;
+        private int size=-1;
         private  List<String> errorList;
         private  float pricePerTimeUnit;
 
@@ -90,6 +90,15 @@ public class VehicleInfoProperties {
 
         public List<String> getErrorList() {
             return errorList;
+        }
+
+        public boolean verify()
+        {
+            if(type==null || price==-1 || size==-1)
+                return false;
+            else
+                return true;
+
         }
 
         @Override

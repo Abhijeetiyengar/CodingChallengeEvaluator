@@ -93,6 +93,11 @@ public class ParkingLotVO {
         return currentSlots;
     }
 
+    public double getCurrent_cost()
+    {
+        return  current_cost;
+    }
+
     class Status
     {
         String type;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,9 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 /*@SpringBootTest(classes = ParkingLotInitiatorTest.class )*/
 @ActiveProfiles("test")
-/*@SpringBootTest*/
-@SpringApplicationConfiguration(classes = ConfigurationClass.class)
-@TestPropertySource("classpath:test_properties_number.properties")
+@SpringBootTest
+//@ContextConfiguration(classes = ConfigurationClass.class)
+@TestPropertySource("classpath:\\test_properties_no_data.properties")
 public class HelperTestNoData {
 
     @Autowired
@@ -32,7 +33,7 @@ public class HelperTestNoData {
     {
 
         Assert.assertEquals(helper.getHelper().getPrice_in_multiple_of_hours(),5);
-        Assert.assertEquals(helper.getVechileTypeToInfoMap().size(),0);
+
 
     }
 }

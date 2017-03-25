@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 //@SpringBootTest(classes = ParkingLotInitiatorTest.class )
 //@ActiveProfiles("test")
 @SpringBootTest
-@TestPropertySource(locations="classpath:test_properties_number.properties")
+@TestPropertySource(locations = "classpath:\\test_properties_correct_data.properties")
 public class PakingVoTester {
 
     @Autowired
@@ -34,46 +34,77 @@ public class PakingVoTester {
 
 
     @Before
-    public void createVO()
-    {
-        parkingLotVO =new ParkingLotVO(helper.getHelper().getVehicleInfoProperties().getVehicleInfo());
-        parkingLotVO.setTotalNumberOfParkingLot(5);
+    public void createVO() {
+        parkingLotVO = new ParkingLotVO(helper.getHelper().getVehicleInfoProperties().getVehicleInfo());
+        parkingLotVO.setTotalNumberOfParkingLot(7);
 
     }
 
     @Test
-    public void addMoreThenAvaliable()
-    {
-        VehicleInfoProperties.VehicleInfo vo=helper.getVechileTypeToInfoMap().get("car");
-        boolean val=parkingLotVO.entry(vo);
+    public void addMoreThenAvaliable() {
+        VehicleInfoProperties.VehicleInfo vo = helper.getVechileTypeToInfoMap().get("car");
+        boolean val = parkingLotVO.entry(vo);
 
-        Assert.assertEquals(val,true);
-        Assert.assertEquals(parkingLotVO.getAvailableSlots(),4);
-
-
-        vo=helper.getVechileTypeToInfoMap().get("truck");
-        parkingLotVO.entry(vo);
-
-        Assert.assertEquals(val,true);
-        Assert.assertEquals(parkingLotVO.getAvailableSlots(),2);
-
-        vo=helper.getVechileTypeToInfoMap().get("car");
-        parkingLotVO.entry(vo);
-
-        Assert.assertEquals(val,true);
-        Assert.assertEquals(parkingLotVO.getAvailableSlots(),1);
-
-        vo=helper.getVechileTypeToInfoMap().get("truck");
-        parkingLotVO.entry(vo);
-
-        Assert.assertEquals(val,false);
-        Assert.assertEquals(parkingLotVO.getAvailableSlots(),1);
+        Assert.assertEquals(val, true);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 5);
 
 
+        vo = helper.getVechileTypeToInfoMap().get("truck");
+        val = parkingLotVO.entry(vo);
 
+        Assert.assertEquals(val, true);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 1);
+
+        vo = helper.getVechileTypeToInfoMap().get("car");
+        val = parkingLotVO.entry(vo);
+
+        Assert.assertEquals(val, false);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 1);
 
 
     }
+
+    @Test
+
+    public void removeMoreThenAdded()
+    {
+        VehicleInfoProperties.VehicleInfo vo = helper.getVechileTypeToInfoMap().get("car");
+        boolean val = parkingLotVO.entry(vo);
+
+        Assert.assertEquals(val, true);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 5);
+        Assert.assertEquals(parkingLotVO.getCurrent_cost(), 0,0);
+
+         vo = helper.getVechileTypeToInfoMap().get("car");
+         val = parkingLotVO.exit(vo,1);
+
+        Assert.assertEquals(parkingLotVO.getCurrent_cost(), 1,0);
+        Assert.assertEquals(val, true);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 7);
+
+         vo = helper.getVechileTypeToInfoMap().get("car");
+         val = parkingLotVO.exit(vo,1);
+
+        Assert.assertEquals(val, false);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 7);
+        Assert.assertEquals(parkingLotVO.getCurrent_cost(), 1,0);
+
+        vo = helper.getVechileTypeToInfoMap().get("truck");
+        val = parkingLotVO.entry(vo);
+
+        Assert.assertEquals(val, true);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 3);
+        Assert.assertEquals(parkingLotVO.getCurrent_cost(), 1,0);
+
+        vo = helper.getVechileTypeToInfoMap().get("truck");
+        val = parkingLotVO.exit(vo,1);
+
+        Assert.assertEquals(val, true);
+        Assert.assertEquals(parkingLotVO.getAvailableSlots(), 7);
+        Assert.assertEquals(parkingLotVO.getCurrent_cost(), 2.5,0);
+    }
+
+
 
 
 }

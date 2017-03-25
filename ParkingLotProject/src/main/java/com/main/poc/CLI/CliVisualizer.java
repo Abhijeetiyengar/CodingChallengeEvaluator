@@ -40,6 +40,7 @@ public class CliVisualizer {
                 case ENTER:
 
                             manager.enter(statusVO.getVehicleInfo());
+
                             break;
 
                 case EXIT:
@@ -59,7 +60,7 @@ public class CliVisualizer {
 
             }
 
-
+            System.out.println("Operation Performed Successfully ");
 
 
         }
