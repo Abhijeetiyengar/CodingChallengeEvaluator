@@ -1,10 +1,12 @@
 package com.test.poc.Helper;
 
 import com.main.poc.Helper.GenericHelper;
+import com.test.poc.ParkingLotInitiatorTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -14,15 +16,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Created by abhijeetiyengar on 3/25/17.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+/*@SpringBootTest(classes = ParkingLotInitiatorTest.class )*/
 @ActiveProfiles("test")
-@TestPropertySource(locations="classpath:test_properties_no_data.properties")
+/*@SpringBootTest*/
+@SpringApplicationConfiguration(classes = ConfigurationClass.class)
+@TestPropertySource("classpath:test_properties_number.properties")
 public class HelperTestNoData {
 
     @Autowired
     GenericHelper helper;
 
     @Test
+
     public void  testPropertiesWithValidData()
     {
 

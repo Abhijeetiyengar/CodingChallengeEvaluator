@@ -24,7 +24,7 @@ public class Utils {
         {
             System.out.println(message+"\n");
 
-            String s = scan.next();
+            String s = scan.nextLine();
 
             value=function.apply(s);
 

@@ -30,6 +30,7 @@ public class VehicleInfoProperties {
         private int price;
         private int size;
         private  List<String> errorList;
+        private  float pricePerTimeUnit;
 
         public VehicleInfo(String type,  String price, String size) {
             this.type = type;
@@ -53,6 +54,7 @@ public class VehicleInfoProperties {
         public void setPrice(String price) {
             try {
                 this.price = Integer.parseInt(price);
+
             } catch (NumberFormatException e) {
                 addError("price of an vehicle should always be a number");
             }
@@ -69,6 +71,15 @@ public class VehicleInfoProperties {
                 addError("size take by vehicle should be a number");
             }
         }
+
+        public float getPricePerTimeUnit() {
+            return pricePerTimeUnit;
+        }
+
+        public void setPricePerTimeUnit(float pricePerTimeUnit) {
+            this.pricePerTimeUnit = pricePerTimeUnit;
+        }
+
         private void addError(String errorString)
         {
             if(errorList==null)

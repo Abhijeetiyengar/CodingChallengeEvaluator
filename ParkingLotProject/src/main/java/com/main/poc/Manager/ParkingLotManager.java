@@ -31,7 +31,7 @@ public class ParkingLotManager {
     {
         if(name!=null && name.equalsIgnoreCase("inMemory"))
         {
-            store=new InMemoryDataStore();
+            store=new InMemoryDataStore(helper.getHelper().getVehicleInfoProperties().getVehicleInfo());
         }
         else
         {
@@ -45,7 +45,7 @@ public class ParkingLotManager {
         {
             System.out.println("No Specific types of Vehicles are provided , sorry can't park");
 
-            return  false;
+            throw new RuntimeException("No type of vehcile present . So closing the shop !!");
 
         }
 
@@ -76,13 +76,15 @@ public class ParkingLotManager {
     public void help()
     {
 
+        System.out.println("-----------------Parking Help--------------------------");
         helper.getVechileTypeToInfoMap().entrySet().stream().forEach(
-            t->  System.out.println( "\t "+t.getValue())
+            t->  System.out.println( "               "+t.getValue())
         );
-        System.out.println(String.format("Prices are per %d hour",helper.getHelper().getPrice_in_multiple_of_hours()));
+        System.out.println(String.format("\nPrices are per %d hour",helper.getHelper().getPrice_in_multiple_of_hours()));
         System.out.println("To Park type ENTER <vehicle type> for e.g ENTER CAR");
         System.out.println("To Park type EXIT <vehicle type> <number of hours> for e.g EXIT CAR 2");
         System.out.println("To get report type REPORT");
+        System.out.println("To stop type SHUTDOWN");
 
     }
 
@@ -98,6 +100,21 @@ public class ParkingLotManager {
         return  info;
     }
 
+
+    public void enter(VehicleInfoProperties.VehicleInfo vehicleInfo)
+    {
+        store.entry(vehicleInfo);
+    }
+
+    public void exit(VehicleInfoProperties.VehicleInfo vehicleInfo,int numberOfHours)
+    {
+        store.exit(vehicleInfo,numberOfHours);
+    }
+
+    public void report()
+    {
+        store.report();
+    }
 
 
 

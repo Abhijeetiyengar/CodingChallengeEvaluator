@@ -59,6 +59,11 @@ public class PropertiesHelper {
             throw new RuntimeException("price_in_multiple_of_hours should be numeric");
         }
 
+        if(price_in_multiple_of_hours==0)
+        {
+            throw new RuntimeException("price_in_multiple_of_hours shouldn't be 0");
+        }
+
         StringBuilder vehicleInfoBuilder=new StringBuilder();
         final AtomicInteger counter=new AtomicInteger(0);
 
@@ -66,6 +71,7 @@ public class PropertiesHelper {
                 vehicleInfo -> {
                     if(vehicleInfo.getErrorList()!=null)
                         throw new RuntimeException(vehicleInfo.getErrorList().toString());
+                    vehicleInfo.setPricePerTimeUnit(vehicleInfo.getPrice()/price_in_multiple_of_hours);
                     vehicleInfoBuilder.append(counter.addAndGet(1)).append(" for ").append(vehicleInfo.getType()).append("\n");
                 }
         );

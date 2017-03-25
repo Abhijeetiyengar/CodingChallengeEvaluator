@@ -9,7 +9,7 @@ public interface DataStore {
 
     void entry(VehicleInfoProperties.VehicleInfo vehicleInfo);
 
-    void exit(VehicleInfoProperties.VehicleInfo vehicleInfo);
+    void exit(VehicleInfoProperties.VehicleInfo vehicleInfo,int numberOfHours);
 
     void report();
 

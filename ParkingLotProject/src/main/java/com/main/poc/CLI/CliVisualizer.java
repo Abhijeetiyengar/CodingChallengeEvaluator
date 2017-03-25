@@ -17,6 +17,8 @@ public class CliVisualizer {
 
 
 
+
+
     public void createInitMessage()
     {
         System.out.println("Welcome to Test Parking Lot");
@@ -30,7 +32,33 @@ public class CliVisualizer {
             ParsedStatusVO statusVO= Utils.<ParsedStatusVO>getInput("Enter Command you want to perform ",this::validateStart);
 
             if(statusVO==null)
-                return;
+                continue;
+
+
+            switch (statusVO.getStatusEum())
+            {
+                case ENTER:
+
+                            manager.enter(statusVO.getVehicleInfo());
+                            break;
+
+                case EXIT:
+
+                            manager.exit(statusVO.getVehicleInfo(),statusVO.hoursForExit);
+                            break;
+
+                case HELP:
+                            manager.help();
+                            break;
+
+                case REPORT:
+
+                            manager.report();
+                            break;
+
+
+            }
+
 
 
 
@@ -83,26 +111,32 @@ public class CliVisualizer {
                                 System.out.println("Invalid time provided for Exit command, type help to find information");
                             }
 
-                            return info==null||i<=0?null: new ParsedStatusVO(OperationStatusEum.EXIT,info,-1);
+                            return info==null||i<=0?null: new ParsedStatusVO(OperationStatusEum.EXIT,info,i);
 
             case "report":
 
-                        break;
+                        //manager.report();
+                        return  new ParsedStatusVO(OperationStatusEum.REPORT,null,-1);
 
             case "help":
-                            manager.help();
-                            break;
+                            //manager.help();
+                        return  new ParsedStatusVO(OperationStatusEum.HELP,null,-1);
+
+            case "shutdown":
+
+                            System.exit(0);
 
             default:
 
                             System.out.println("Invalid Command , type help to find information");
+                            return  null;
 
 
 
 
         }
 
-        return null;
+
 
     }
 
@@ -131,5 +165,5 @@ public class CliVisualizer {
         }
     }
 
-    public enum OperationStatusEum{ENTER,EXIT,REPORT};
+    public enum OperationStatusEum{ENTER,EXIT,REPORT,HELP};
 }

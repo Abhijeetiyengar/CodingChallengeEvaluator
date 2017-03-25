@@ -1,15 +1,15 @@
-package com.test.poc;
+package com.test.poc.Helper;
 
 import com.main.poc.ParkingLotInitiator;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 
 /**
  * Created by abhijeetiyengar on 3/25/17.
  */
-@SpringBootApplication
+
+@Configuration
 @ComponentScan(basePackages = "com.main.poc",
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
@@ -19,10 +19,5 @@ import org.springframework.context.annotation.FilterType;
 
                         })
         })
-public class ParkingLotInitiatorTest {
-
-    public static void main(String[] args)
-    {
-        SpringApplication.run(ParkingLotInitiatorTest.class, args);
-    }
+public class ConfigurationClass {
 }
